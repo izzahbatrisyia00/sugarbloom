@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugar Bloom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #f8f1e9;
+            --secondary-color: #e2d5c8;
+            --accent-color: #d4a373;
+            --text-color: #5c4d3d;
+            --light-text: #8b7d6b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            position: relative;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .header-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--secondary-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--primary-color);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Main Content */
+        main {
+            padding: 40px 0;
+            min-height: calc(100vh - 400px);
+        }
+        
+        section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+        
+        /* Homepage */
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .featured {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .featured-item {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .featured-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .featured-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .featured-item-info {
+            padding: 15px;
+        }
+        
+        .featured-item-info h3 {
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        /* About Us */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Our Desserts */
+        .dessert-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .dessert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .dessert-card {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .dessert-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .dessert-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .dessert-info {
+            padding: 15px;
+        }
+        
+        .dessert-info h3 {
+            margin-bottom: 10px;
+        }
+        
+        .add-to-cart {
+            display: block;
+            width: 100%;
+            padding: 8px 0;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #c08d5f;
+        }
+        
+        /* Cart */
+        .cart-container {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .cart-items {
+            flex: 2;
+        }
+        
+        .cart-summary {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .empty-cart-message {
+            text-align: center;
+            color: var(--light-text);
+            padding: 40px 0;
+            font-style: italic;
+        }
+        
+        .cart-item {
+            display: flex;
+            background-color: white;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .cart-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: var(--light-text);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            width: 25px;
+            height: 25px;
+            border: 1px solid var(--secondary-color);
+            background: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quantity {
+            width: 30px;
+            text-align: center;
+        }
+        
+        .cart-summary h3 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .total {
+            font-weight: bold;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--secondary-color);
+        }
+        
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #c08d5f;
+        }
+        
+        /* Checkout */
+        .checkout-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .order-summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .place-order-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .place-order-btn:hover {
+            background-color: #c08d5f;
+        }
+        
+        /* Contact */
+        .contact-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .contact-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .contact-card h3 {
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Group Members */
+        .members-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            perspective: 1000px;
+        }
+        
+        .member-card {
+            width: 300px;
+            height: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            cursor: pointer;
+        }
+        
+        .member-card:hover {
+            transform: rotateY(180deg);
+        }
+        
+        .member-front, .member-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .member-front {
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .member-front img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .member-back {
+            background-color: var(--secondary-color);
+            transform: rotateY(180deg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .member-back p {
+            margin-bottom: 10px;
+        }
+        
+        .member-back strong {
+            color: var(--accent-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #c08d5f;
+        }
+        
+        /* Page-specific styles */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 5px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .cart-container {
+                flex-direction: column;
+            }
+            
+            .checkout-form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Banner -->
+    <header>
+        <img src="image/banner.jpg" alt="Bakery Header" class="header-image">
+        <h1>SUGAR BLOOM</h1>
+        <p>Satisfy Your Sweetest Craving !</p>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+            <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
+            <li class="dropdown">
+                <a href="#" class="nav-link" data-page="desserts">Our Desserts</a>
+                <div class="dropdown-content">
+                    <a href="#" class="dessert-category" data-category="cakes">Cakes</a>
+                    <a href="#" class="dessert-category" data-category="cookies">Cookies</a>
+                    <a href="#" class="dessert-category" data-category="croissants">Croissants</a>
+                    <a href="#" class="dessert-category" data-category="kunafa">Kunafa</a>
+                    <a href="#" class="dessert-category" data-category="pancakes">Pancakes</a>
+					<a href="#" class="dessert-category" data-category="donuts">Donuts</a>
+					<a href="#" class="dessert-category" data-category="strawberry-cup">Strawberry-Cup</a>
+					<a href="#" class="dessert-category" data-category="croffles">Croffles</a>
+					<a href="#" class="dessert-category" data-category="pudings">Pudings</a>
+                </div>
+            </li>
+            <li><a href="#" class="nav-link" data-page="cart">Cart (<span id="cart-count">0</span>)</a></li>
+            <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+            <li><a href="#" class="nav-link" data-page="members">Group Members</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="intro">
+                <h2 class="section-title">Welcome to Sugar Bloom&#127827	</h2>
+                <p>Welcome to Sugar Bloom – where every bite is a sweet celebration! &#127874&#10024 </p>
+				<p>Indulge in our delightful desserts made with love, just for you.</p>
+				<p>Satisfy Your Sweetest Craving Today!</p>
+		   </div>
+            
+            <h2 class="section-title">Featured Desserts</h2>
+            <div class="featured">
+                <div class="featured-item">
+                    <img src="image/cakes.jpg" alt="Cakes">
+                    <div class="featured-item-info">
+                        <h3>Cakes</h3>
+                    </div>
+                </div>
+                <div class="featured-item">
+                    <img src="image/cookies.jpg" alt="cookies">
+                    <div class="featured-item-info">
+                        <h3>Cookies</h3>
+                    </div>
+                </div>
+                <div class="featured-item">
+                    <img src="image/croissants.jpg" alt="croissants">
+                    <div class="featured-item-info">
+                        <h3>Croissants</h3>
+                    </div>
+                </div>
+				<div class="featured-item">
+                    <img src="image/kunafa.jpg" alt="kunafa">
+                    <div class="featured-item-info">
+                        <h3>Kunafa</h3>
+                    </div>
+                </div>
+				<div class="featured-item">
+                    <img src="image/pancake.jpg" alt="pancakes">
+                    <div class="featured-item-info">
+                        <h3>Pancakes</h3>
+                    </div>
+                </div>
+				<div class="featured-item">
+                    <img src="image/donuts.jpg" alt="donuts">
+                    <div class="featured-item-info">
+                        <h3>Donuts</h3>
+                    </div>
+                </div>
+				<div class="featured-item">
+                    <img src="image/strawberry cups.jpg" alt="Strawberry-cup">
+                    <div class="featured-item-info">
+                        <h3>Strawberry-Cup</h3>
+                    </div>
+                </div>
+				<div class="featured-item">
+                    <img src="image/croffles.jpg" alt="croffles">
+                    <div class="featured-item-info">
+                        <h3>Croffles</h3>
+                    </div>
+                </div>
+				<div class="featured-item">
+                    <img src="image/puddings.jpg" alt="pudings">
+                    <div class="featured-item-info">
+                        <h3>pudings</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Us Page -->
+        <section id="about" class="page">
+            <h2 class="section-title">About Sugar Bloom&#127827</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Our journey began in 2020 with a simple dream:  to spread joy through sweet, handmade desserts.</p>
+                    <p>What started as a cozy home kitchen filled with the aroma of freshly baked treats has now blossomed into a beloved dessert haven for many. Each cake, cookie, and bite-sized delight is crafted with passion, the finest ingredients, and a whole lot of love.</p>
+   				    <p>Our name, Sugar Bloom, reflects what we believe in the magic of sweetness blooming in every moment shared with those you love. Whether you're celebrating a special day or simply craving something sweet, we’re here to satisfy your sweetest craving.</p>
+					<p>Thank you for being part of our story. We can’t wait to sweeten your day, one dessert at a time. &#128150	</p>
+				</div>
+                <div class="about-image">
+                    <img src="image/about us.jpg" alt="Our Bakery">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Our Desserts Page -->
+        <section id="desserts" class="page">
+            <h2 class="section-title">Our Desserts &#128151</h2>
+            <div class="dessert-categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="cakes">Cakes</button>
+                <button class="category-btn" data-category="cookies">Cookies</button>
+                <button class="category-btn" data-category="croissants">Croissants</button>
+                <button class="category-btn" data-category="kunafa">Kunafa</button>
+                <button class="category-btn" data-category="pancakes">Pancakes</button>
+				<button class="category-btn" data-category="donuts">Donuts</button>
+                <button class="category-btn" data-category="strawberry-cup">Strawberry-Cup</button>
+                <button class="category-btn" data-category="croffles">Croffles</button>
+                <button class="category-btn" data-category="pudings">Pudings</button>
+
+            </div>
+            
+            <div class="dessert-grid">
+                <!-- Cakes -->
+                <div class="dessert-card" data-category="cakes">
+                    <img src="image/hazelnut cake.jpg" alt="hazelnut Cake">
+                    <div class="dessert-info">
+                        <h3>Hazelnut Cake</h3>
+                        <p class="price">RM 25.00</p>
+                        <p>A soft and moist cake made with roasted hazelnuts.</p>
+                        <button class="add-to-cart" data-id="1" data-name="Hazelnut Cake" data-price="25.00">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="dessert-card" data-category="cakes">
+                    <img src="image/indulgence cake.jpg" alt="indulgence cake">
+                    <div class="dessert-info">
+                        <h3>Indulgence Cake</h3>
+                        <p class="price">RM 25.00</p>
+                        <p>Layered with moist chocolate sponge and smooth chocolate mousse.</p>
+                        <button class="add-to-cart" data-id="2" data-name="Indulgence Cake" data-price="25.00">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="dessert-card" data-category="cakes">
+                    <img src="image/biscoff cake.jpg" alt="Biscoff Cake">
+                    <div class="dessert-info">
+                        <h3>Biscoff Cake</h3>
+                        <p class="price">RM 28.00</p>
+                        <p>Layered with creamy Biscoff spread and top with crushed Biscoff biscuits for extra crunch.</p>
+                        <button class="add-to-cart" data-id="3" data-name="Biscoff Cake" data-price="28.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cakes">
+                    <img src="image/red velvet.jpg" alt="red velvet Cake">
+                    <div class="dessert-info">
+                        <h3>Red Velvet Cake</h3>
+                        <p class="price">RM 27.00</p>
+                        <p>Layered with rich cream cheese and perfect for birthdays, weddings, and special moments.</p>
+                        <button class="add-to-cart" data-id="4" data-name="Red Velvet Cake" data-price="27.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cakes">
+                    <img src="image/carrot.jpg" alt="Carrot Cake">
+                    <div class="dessert-info">
+                        <h3>Carrot Cake</h3>
+                        <p class="price">RM 25.00</p>
+                        <p>Made with fresh grated carrots, with bits of walnut for natural sweetness and a soft texture.</p>
+                        <button class="add-to-cart" data-id="5" data-name="Carrot Cake" data-price="25.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cakes">
+                    <img src="image/choc moist.jpg" alt="Chocolate moist Cake">
+                    <div class="dessert-info">
+                        <h3>Chocolate Moist Cake</h3>
+                        <p class="price">RM 15.00</p>
+                        <p>Baked to perfection for a super moist texture that stays soft for days and filled silky chocolate ganache. </p>
+                        <button class="add-to-cart" data-id="6" data-name="Chocolate Moist Cake" data-price="15.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cakes">
+                    <img src="image/burncheese.jpg" alt="Basque Burnt Cheesecake">
+                    <div class="dessert-info">
+                        <h3>Basque Burnt Cheesecake</h3>
+                        <p class="price">RM 20.00</p>
+                        <p>Baked at high heat to create a golden-brown, soft inside and melts in your mouth with every bite.</p>
+                        <button class="add-to-cart" data-id="7" data-name="Basque Burnt Cheesecake" data-price="20.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cakes">
+                    <img src="image/brownies.jpg" alt="Brownies Cake">
+                    <div class="dessert-info">
+                        <h3>Brownies Cake</h3>
+                        <p class="price">RM 13.00</p>
+                        <p>Made with premium dark chocolate, crispy on the edges but soft in the center and melt-in-your-mouth texture. </p>
+                        <button class="add-to-cart" data-id="8" data-name="Brownies Cake" data-price="13.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cakes">
+                    <img src="image/mocheesecake.jpg" alt="Mocheesecake Chocolate">
+                    <div class="dessert-info">
+                        <h3>Mocheesecake Chocolate</h3>
+                        <p class="price">RM 18.00</p>
+                        <p>A dessert combining chewy mochi with rich chocolate cheesecake. Soft and stretchy mochi wraps around with creamy chocolate cheesecake filling. </p>
+                        <button class="add-to-cart" data-id="9" data-name="Mocheesecake Chocolate" data-price="18.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cakes">
+                    <img src="image/mocheese pis.jpg" alt="Mocheesecake Pistachio">
+                    <div class="dessert-info">
+                        <h3>Mocheesecake Pistachio</h3>
+                        <p class="price">RM 20.00</p>
+                        <p>Chewy mochi layer wraps a smooth, nutty pistachio filling made with real cream cheese and roasted pistachios. </p>
+                        <button class="add-to-cart" data-id="10" data-name="Mocheesecake Pistachio" data-price="20.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cakes">
+                    <img src="image/kek tapak kuda.jpg" alt="Kek Tapak Kuda">
+                    <div class="dessert-info">
+                        <h3>Kek Tapak Kuda</h3>
+                        <p class="price">RM 13.00</p>
+                        <p>A soft sponge rolled cake with a rich and creamy pistachio filling.</p>
+                        <button class="add-to-cart" data-id="11" data-name="Kek Tapak Kuda" data-price="13.00">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Cookies -->
+                <div class="dessert-card" data-category="cookies">
+                    <img src="image/choc chip cookies.jpg" alt="Chocolate Chip Cookies">
+                    <div class="dessert-info">
+                        <h3>Chocolate Chip Cookies (6pcs)</h3>
+                        <p class="price">RM 12.00</p>
+                        <p>Classic cookies with melty chocolate chips</p>
+                        <button class="add-to-cart" data-id="12" data-name="Chocolate Chip Cookies (6pcs)" data-price="12.00">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="dessert-card" data-category="cookies">
+                    <img src="image/cookies milk.jpg" alt="Cookies Milk">
+                    <div class="dessert-info">
+                        <h3>Cookies Milk</h3>
+                        <p class="price">RM 14.00</p>
+                        <p>Classic cookies dipped in cold, creamy milk for the perfect bite.</p>
+                        <button class="add-to-cart" data-id="13" data-name="Cookies Milk" data-price="14.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cookies">
+                    <img src="image/dark cookies pistachio.jpg" alt="Dark Cookies Pistachio">
+                    <div class="dessert-info">
+                        <h3>Dark Cookies Pistachio</h3>
+                        <p class="price">RM 13.00</p>
+                        <p>Perfect balance of bittersweet and nutty sweetness in every bite.</p>
+                        <button class="add-to-cart" data-id="14" data-name="Dark Cookies Pistachio" data-price="13.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cookies">
+                    <img src="image/dark cookies whitechoc.jpg" alt="Dark Cookies whitechoc">
+                    <div class="dessert-info">
+                        <h3>Dark Cookies whitechoc</h3>
+                        <p class="price">RM 13.00</p>
+                        <p>Intense dark cookies paired with smooth, sweet white chocolate drizzle.</p>
+                        <button class="add-to-cart" data-id="15" data-name="Dark Cookies whitechoc" data-price="13.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="cookies">
+                    <img src="image/brookies.jpg" alt="Brookies">
+                    <div class="dessert-info">
+                        <h3>Brookies</h3>
+                        <p class="price">RM 13.00</p>
+                        <p>A thick, fudgy brownie base topped with soft, golden cookie dough.</p>
+                        <button class="add-to-cart" data-id="16" data-name="Brookies" data-price="13.00">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Pastries -->
+                <div class="dessert-card" data-category="croissants">
+                    <img src="image/ribbon croissant.jpg" alt="Ribbon Croissant">
+                    <div class="dessert-info">
+                        <h3>Ribbon Croissant</h3>
+                        <p class="price">RM 15.00</p>
+                        <p>flaky croissants shaped in a stylish ribbon twist. Filled with smooth chocolate and rich pistachio sauce inside.</p>
+                        <button class="add-to-cart" data-id="17" data-name="Ribbon Croissant" data-price="15.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="croissants">
+                    <img src="image/croissant kunafa.jpg" alt="Kunafa Pistachio Croissant">
+                    <div class="dessert-info">
+                        <h3> Kunafa Pistachio Croissant</h3>
+                        <p class="price">RM 16.00</p>
+                        <p>A buttery, flaky croissant generously filled with sweet kunafa and creamy pistachio paste.</p>
+                        <button class="add-to-cart" data-id="18" data-name=" Kunafa Pistachio Croissant" data-price="16.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="croissants">
+                    <img src="image/croissant piscadburry.jpg" alt="PisCadbury  Croissant">
+                    <div class="dessert-info">
+                        <h3>PisCadbury Croissant</h3>
+                        <p class="price">RM 16.00</p>
+                        <p>Flaky, buttery croissant coated with creamy pistachio and Cadbury chocolate sauce, topped with roasted almond slices for an added crunch.</p>
+                        <button class="add-to-cart" data-id="19" data-name="PisCadbury  Croissant" data-price="16.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="croissants">
+                    <img src="image/croissant hotchoco.jpg" alt="HotChoco Croissant">
+                    <div class="dessert-info">
+                        <h3>HotChoco Croissant</h3>
+                        <p class="price">RM 20.00</p>
+                        <p>A warm, flaky croissant served alongside a rich and creamy hot chocolate.</p>
+                        <button class="add-to-cart" data-id="20" data-name="HotChoco Croissant" data-price="20.00">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Pies -->
+                <div class="dessert-card" data-category="kunafa">
+                    <img src="image/kunafa pischoco.jpg" alt="PisChoco Kunafa">
+                    <div class="dessert-info">
+                        <h3>PisChoco Kunafa</h3>
+                        <p class="price">RM 25.00</p>
+                        <p>Crispy kunafa topped with creamy pistachio and chocolate sauce, finished with crunchy crumbs for extra texture.</p>
+                        <button class="add-to-cart" data-id="21" data-name="PisChoco Kunafa" data-price="25.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="kunafa">
+                    <img src="image/kunafa biscoff coklat.jpg" alt="BisChoco Kunafa">
+                    <div class="dessert-info">
+                        <h3>BisChoco Kunafa</h3>
+                        <p class="price">RM 25.00</p>
+                        <p>Crispy kunafa topped with biscoff spread and milk chocolate, finished with biscoff crumbs for extra texture.</p>
+                        <button class="add-to-cart" data-id="24" data-name="BisChoco Kunafa" data-price="25.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="kunafa">
+                    <img src="image/kunafa piscadburry.jpg" alt="PisCadbury Kunafa">
+                    <div class="dessert-info">
+                        <h3>PisCadbury Kunafa</h3>
+                        <p class="price">RM 26.00</p>
+                        <p>Crispy kunafa topped with creamy pistachio and cadbury sauce, finished with almond crunchy crumbs for extra texture.</p>
+                        <button class="add-to-cart" data-id="22" data-name="PisCadbury Kunafa" data-price="26.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="kunafa">
+                    <img src="image/kunafa redvelvet.jpg" alt="Red Velvet Kunafa">
+                    <div class="dessert-info">
+                        <h3>Red Velvet Kunafa</h3>
+                        <p class="price">RM 26.00</p>
+                        <p>Crispy kunafa topped with creamy cheese and red velvet sauce, finished with red velvet crumbs for extra texture.</p>
+                        <button class="add-to-cart" data-id="23" data-name="Red Velvet Kunafa" data-price="26.00">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Cupcakes -->
+                <div class="dessert-card" data-category="pancakes">
+                    <img src="image/chocolate pancake.jpg" alt="Chocolate Pancake">
+                    <div class="dessert-info">
+                        <h3>Chocolate Pancake (12pcs)</h3>
+                        <p class="price">RM 10.00</p>
+                        <p>Mini fluffy pancakes topped with rich chocolate sauce and white chocolate drizzle.</p>
+                        <button class="add-to-cart" data-id="24" data-name="Chocolate Pancake(12pcs)" data-price="15.90">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="dessert-card" data-category="pancakes">
+                    <img src="image/pancake whitechoco.jpg" alt="WhiteChoco Pancake">
+                    <div class="dessert-info">
+                        <h3>WhiteChoco Pancake (12pcs)</h3>
+                        <p class="price">RM 10.00</p>
+                        <p>Mini fluffy pancakes topped with rich white chocolate sauce and oreo crumbs.</p>
+                        <button class="add-to-cart" data-id="25" data-name="WhiteChoco Pancake (12pcs)" data-price="10.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="pancakes">
+                    <img src="image/pancake biscoff.jpg" alt="Biscoff Pancake">
+                    <div class="dessert-info">
+                        <h3>Biscoff Pancake (12pcs)</h3>
+                        <p class="price">RM 10.00</p>
+                        <p>Mini fluffy pancakes topped with biscoff spread and biscoff crumbs.</p>
+                        <button class="add-to-cart" data-id="26" data-name="Biscoff Pancake (12pcs)" data-price="10.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="pancakes">
+                    <img src="image/pancake pistachio.jpg" alt="Pistachio Pancake">
+                    <div class="dessert-info">
+                        <h3>Pistachio Pancake (12pcs)</h3>
+                        <p class="price">RM 12.00</p>
+                        <p>Mini fluffy pancakes topped with rich pistachio sauce and white chocolate drizzle.</p>
+                        <button class="add-to-cart" data-id="27" data-name="Pistachio Pancake (12pcs)" data-price="12.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="pancakes">
+                    <img src="image/pancake chocoberry.jpg" alt="Chocoberry Pancake">
+                    <div class="dessert-info">
+                        <h3>Chocoberry Pancake (12pcs)</h3>
+                        <p class="price">RM 14.00</p>
+                        <p>Mini fluffy pancakes topped with rich chocolate sauce and strawberry slices on top.</p>
+                        <button class="add-to-cart" data-id="28" data-name="Chocoberry Pancake (12pcs)" data-price="14.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="pancakes">
+                    <img src="image/pancake pischoco.jpg" alt="Pischoco Pancake">
+                    <div class="dessert-info">
+                        <h3>Pischoco Pancake (12pcs)</h3>
+                        <p class="price">RM 15.00</p>
+                        <p>Mini fluffy pancakes topped with rich pistachio and chocolate sauce, topped with almond and strawberry slices</p>
+                        <button class="add-to-cart" data-id="29" data-name="Pischoco Pancake (12pcs)" data-price="15.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="pancakes">
+                    <img src="image/Mix pancake.jpg" alt="Mix Pancake">
+                    <div class="dessert-info">
+                        <h3>Mix Pancake (12pcs)</h3>
+                        <p class="price">RM 15.00</p>
+                        <p>Mini fluffy pancakes topped with rich chocolate sauce, topped with biscoff crumbs, crunchy ball,oreo crumbs and strawberry slices</p>
+                        <button class="add-to-cart" data-id="30" data-name="Mix Pancake (12pcs)" data-price="15.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="pancakes">
+                    <img src="image/pancake set.jpg" alt="Mix Set Pancake">
+                    <div class="dessert-info">
+                        <h3>Mix Set Pancake (32pcs)</h3>
+                        <p class="price">RM 35.00</p>
+                        <p>Mini fluffy pancakes topped with rich chocolate sauce, topped with biscoff crumbs, crunchy ball,oreo crumbs, red velvet crumbs and marshmellow </p>
+                        <button class="add-to-cart" data-id="31" data-name="Mix Set Pancake (32pcs)" data-price="35.00">Add to Cart</button>
+                    </div>
+                </div>
+				
+				<div class="dessert-card" data-category="donuts">
+                    <img src="image/donuts.jpg" alt="Mix Set Donuts">
+                    <div class="dessert-info">
+                        <h3>Mix Set Donuts (15pcs)</h3>
+                        <p class="price">RM 55.00</p>
+                        <p>Soft and fluffy donut with mix flavour.</p>
+                        <button class="add-to-cart" data-id="36" data-name="Mix Set Donuts (15pcs)" data-price="55.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="donuts">
+                    <img src="image/donut gula.jpg" alt="Sugar Donuts">
+                    <div class="dessert-info">
+                        <h3>Sugar Donuts (5pcs)</h3>
+                        <p class="price">RM 6.00</p>
+                        <p>Soft and fluffy donut coated with fine sugar crystals.</p>
+                        <button class="add-to-cart" data-id="32" data-name="Sugar Donuts (5pcs)" data-price="6.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="donuts">
+                    <img src="image/donut cheese.jpg" alt="Cheese Caramel Donuts">
+                    <div class="dessert-info">
+                        <h3>Cheese Caramel Donuts</h3>
+                        <p class="price">RM 5.00</p>
+                        <p>A soft, fluffy donut topped with melted cheese slices and rich caramel drizzle.</p>
+                        <button class="add-to-cart" data-id="33" data-name="Cheese Caramel Donuts" data-price="5.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="donuts">
+                    <img src="image/donut choco.jpg" alt="Chocolate Donuts">
+                    <div class="dessert-info">
+                        <h3>Chocolate Donuts</h3>
+                        <p class="price">RM 4.00</p>
+                        <p>Soft and fluffy donut coated in rich chocolate glaze.</p>
+                        <button class="add-to-cart" data-id="34" data-name="Chocolate Donuts" data-price="4.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="donuts">
+                    <img src="image/donut biscoff.jpg" alt="Biscoff Donuts">
+                    <div class="dessert-info">
+                        <h3>Biscoff Donuts</h3>
+                        <p class="price">RM 4.00</p>
+                        <p>Soft and fluffy donut coated with biscoff spread and topped with biscoff crumbs.</p>
+                        <button class="add-to-cart" data-id="35" data-name="Biscoff Donuts" data-price="4.00">Add to Cart</button>
+                    </div>
+                </div>
+				
+				<div class="dessert-card" data-category="strawberry-cup">
+                    <img src="image/strawberry choco.jpg" alt="Strawberry Chocolate">
+                    <div class="dessert-info">
+                        <h3>Strawberry Chocolate</h3>
+                        <p class="price">RM 14.00</p>
+                        <p>A delightful strawberry cup layered with smooth milk chocolate and topped with whipping cream.</p>
+                        <button class="add-to-cart" data-id="36" data-name="strawberry chocolate" data-price="14.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="strawberry-cup">
+                    <img src="image/strawberry chocomatcha.jpg" alt="Strawberry ChocoMatcha">
+                    <div class="dessert-info">
+                        <h3>Strawberry ChocoMatcha</h3>
+                        <p class="price">RM 15.00</p>
+                        <p>A delightful strawberry cup layered with smooth milk chocolate mix matcha spread and topped with whipping cream.</p>
+                        <button class="add-to-cart" data-id="37" data-name="Strawberry ChocoMatcha" data-price="15.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="strawberry-cup">
+                    <img src="image/strawberry pischoco.jpg" alt="Strawberry PisChoco">
+                    <div class="dessert-info">
+                        <h3>Strawberry PisChoco</h3>
+                        <p class="price">RM 15.00</p>
+                        <p>A delightful strawberry cup layered with smooth milk chocolate mix pistachio and topped with whipping cream.</p>
+                        <button class="add-to-cart" data-id="38" data-name="Strawberry PisChoco" data-price="15.00">Add to Cart</button>
+                    </div>
+                </div>
+				
+				<div class="dessert-card" data-category="croffles">
+                    <img src="image/croffle fruits.jpg" alt="Croffle Fruits">
+                    <div class="dessert-info">
+                        <h3>Croffle Fruits</h3>
+                        <p class="price">RM 12.00</p>
+                        <p>Crispy, golden croffles served in a bowl with fresh strawberries, blueberries, and banana slices and topped with milk chocolate. </p>
+                        <button class="add-to-cart" data-id="39" data-name="Croffle Fruits" data-price="12.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="croffles">
+                    <img src="image/croffle pis.jpg" alt="Croffle Pistachio">
+                    <div class="dessert-info">
+                        <h3>Croffle Pistachio</h3>
+                        <p class="price">RM 9.00</p>
+                        <p>Crispy, golden croffles drizzled with pistachio sauce and topped with pistachio crumbs.</p>
+                        <button class="add-to-cart" data-id="40" data-name="Croffle Pistachio" data-price="9.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="croffles">
+                    <img src="image/croffle biscoff.jpg" alt="Croffle Biscoff">
+                    <div class="dessert-info">
+                        <h3>Croffle Biscoff</h3>
+                        <p class="price">RM 8.00</p>
+                        <p>Crispy, golden croffles drizzled with biscoff spread and topped with biscoff crumbs.</p>
+                        <button class="add-to-cart" data-id="41" data-name="Croffle Biscoff" data-price="8.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="croffles">
+                    <img src="image/croffle hazelnut banana.jpg" alt="Croffle Hazelnut Banana">
+                    <div class="dessert-info">
+                        <h3>Croffle Hazelnut Banana</h3>
+                        <p class="price">RM 8.00</p>
+                        <p>Crispy, golden croffles drizzled with hazelnut spread and topped with banana slices.</p>
+                        <button class="add-to-cart" data-id="42" data-name="Croffle Hazelnut Banana" data-price="8.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="croffles">
+                    <img src="image/croffle Cookies&Cream.jpg" alt="Croffle Cookies&Cream">
+                    <div class="dessert-info">
+                        <h3>Croffle Cookies & Cream</h3>
+                        <p class="price">RM 7.00</p>
+                        <p>Crispy, golden croffles drizzled with white chocolate and topped with oreo crumbs.</p>
+                        <button class="add-to-cart" data-id="43" data-name="Croffle Cookies&Cream" data-price="7.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="croffles">
+                    <img src="image/croffles choco crunchy.jpg" alt="Croffle Choco Crunchy">
+                    <div class="dessert-info">
+                        <h3>Croffle Choco Crunchy</h3>
+                        <p class="price">RM 7.00</p>
+                        <p>Crispy, golden croffles drizzled with milk chocolate and topped with cococrunch.</p>
+                        <button class="add-to-cart" data-id="44" data-name="Croffle Choco Crunchy" data-price="7.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="pudings">
+                    <img src="image/pudding caramel.jpg" alt="Mini Puding Caramel">
+                    <div class="dessert-info">
+                        <h3>Mini Puding Caramel (1set/10pcs)</h3>
+                        <p class="price">RM 10.00</p>
+                        <p>Soft, creamy custard topped with smooth caramel sauce.</p>
+                        <button class="add-to-cart" data-id="45" data-name="Mini Puding Caramel (1set/10pcs)" data-price="10.00">Add to Cart</button>
+                    </div>
+                </div>
+								<div class="dessert-card" data-category="pudings">
+                    <img src="image/cookies&cream.jpg" alt="Mini Puding cookies&Cream">
+                    <div class="dessert-info">
+                        <h3>Mini Puding Cookies&Cream (1set/10pcs)</h3>
+                        <p class="price">RM 10.00</p>
+                        <p>Smooth and milky base blended with cookie bits for that classic cookies & cream flavour.</p>
+                        <button class="add-to-cart" data-id="46" data-name="Mini Puding Cookies&Cream (1set/10pcs)" data-price="10.00">Add to Cart</button>
+                    </div>
+                </div>
+					<div class="dessert-card" data-category="pudings">
+                    <img src="image/tutty fruity.jpg" alt="Mini Puding Tutty Fruity">
+                    <div class="dessert-info">
+                        <h3>Mini Puding Tutty Fruity (1set/10pcs)</h3>
+                        <p class="price">RM 10.00</p>
+                        <p>A soft and creamy pudding filled with colorful candied fruits.</p>
+                        <button class="add-to-cart" data-id="47" data-name="Mini Puding Tutty Fruity (1set/10pcs)" data-price="10.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="pudings">
+                    <img src="image/chocolate.jpg" alt="Mini Puding Chocolate">
+                    <div class="dessert-info">
+                        <h3>Mini Puding Chocolate (1set/10pcs)</h3>
+                        <p class="price">RM 10.00</p>
+                        <p>Smooth, creamy pudding made with rich cocoa and real milk.</p>
+                        <button class="add-to-cart" data-id="48" data-name="Mini Puding Chocolate (1set/10pcs)" data-price="10.00">Add to Cart</button>
+                    </div>
+                </div>
+				<div class="dessert-card" data-category="pudings">
+                    <img src="image/pudding custard.jpg" alt="Puding Custard">
+                    <div class="dessert-info">
+                        <h3>Puding Custard</h3>
+                        <p class="price">RM 20.00</p>
+                        <p>Smooth and creamy pudding with a rich, eggy vanilla flavor.</p>
+                        <button class="add-to-cart" data-id="49" data-name="Puding Custard" data-price="20.00">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="cart" class="page">
+            <h2 class="section-title">Your Cart &#128722</h2>
+            <div class="cart-container">
+                <div class="cart-items" id="cart-items">
+                    <p class="empty-cart-message">Your cart is empty</p>
+                </div>
+        
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">RM 0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee</span>
+                        <span>RM 5.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="total">RM 5.00</span>
+                    </div>
+                    <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+                </div>
+            </div>
+        </section>
+        
+        <section id="checkout" class="page">
+            <h2 class="section-title">Checkout</h2>
+            <form class="checkout-form" id="checkout-form">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group full-width">
+                    <label for="address">Delivery Address</label>
+                    <textarea id="address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="postcode">Postcode</label>
+                    <input type="text" id="postcode" required>
+                </div>
+                <div class="form-group">
+                    <label for="payment">Payment Method</label>
+                    <select id="payment" required>
+                        <option value="">Select payment method</option>
+                        <option value="credit">Credit Card</option>
+                        <option value="debit">Debit Card</option>
+                        <option value="grabpay">GrabPay</option>
+                        <option value="touchngo">Touch 'n Go</option>
+                        <option value="cash">Cash on Delivery</option>
+                    </select>
+                </div>
+                
+                <div class="order-summary">
+                    <h3>Your Order</h3>
+                    <div id="checkout-items">
+                    </div>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="checkout-subtotal">RM 0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee</span>
+                        <span>RM 5.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="checkout-total">RM 5.00</span>
+                    </div>
+                    
+                    <button type="submit" class="place-order-btn">Place Order</button>
+                </div>
+            </form>
+        </section>
+        
+        <section id="contact" class="page">
+            <h2 class="section-title">Contact Us &#129505</h2>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h3>&#128205 Visit Us</h3>
+                    <p>Lot 25, Sugar Bloom<br>
+                    Ambangan Heights<br>
+                    08000 Sungai Petani</p>
+                </div>
+                <div class="contact-card">
+                    <h3>&#128222 Call Us</h3>
+                    <p> 04 1234 0067<br>
+                   Opening hours: Monday - Sunday 3PM - 6PM<br></p>
+                </div>
+                <div class="contact-card">
+                    <h3>&#128140 Email Us</h3>
+                    <p>sugarbloom@gmail.com<br>
+                    For events: sugarbloomevent@gmail.com<br></p>
+                </div>
+				<div class="contact-card">
+                    <h3>&#128247 Follow Us</h3>
+                    <p>Instagram: @sugarbloom.hq<br>
+					   Facebook: @sugarbloomhq<br>
+					   Twitter: @sugarbloom.hq<br></p>
+                </div>
+            </div>
+            
+            <h3 class="section-title">Send Us a Message &#128159 </h3>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="contact-name">Name</label>
+                    <input type="text" id="contact-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Email</label>
+                    <input type="email" id="contact-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-subject">Subject</label>
+                    <input type="text" id="contact-subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="place-order-btn">Send Message</button>
+            </form>
+        </section>
+        
+        <section id="members" class="page">
+            <h2 class="section-title">Group Members &#127799</h2>
+            <div class="members-container">
+                <div class="member-card">
+                    <div class="member-front">
+                        <img src="image/izzah.jpg" alt="Team Member 1">
+                        <h3>IZZAH BATRISYIA</h3>
+                        <p>Group Member 1</p>
+                    </div>
+                    <div class="member-back">
+                        <p><strong>Title:</strong> Corporate Website</p>
+                        <p><strong>Name:</strong> Izzah Batrisyia binti Abdul Ghoni</p>
+                        <p><strong>Student ID:</strong> 2023854988</p>
+                        <p><strong>Group:</strong> KCDIM1444A</p>
+                        <p><strong>Course code:</strong> IML 254</p>
+                        <p><strong>Course name:</strong> Introduction to Web Content Development</p>
+                        <p><strong>Faculty:</strong> Information Sciences</p>
+                        <p><strong>Submission date:</strong> 2 July 2025</p>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-front">
+                        <img src="image/nurin.jpg" alt="Team Member 2">
+                        <h3>NURIN AYZZASYURA</h3>
+                        <p>Group Member 2</p>
+                    </div>
+                    <div class="member-back">
+                        <p><strong>Title:</strong> Corporate Website</p>
+                        <p><strong>Name:</strong> Nurin Ayzzasyura binti Adanan</p>
+                        <p><strong>Student ID:</strong> 2023638966</p>
+                        <p><strong>Group:</strong> KCDIM1444A</p>
+                        <p><strong>Course code:</strong> IML 254</p>
+                        <p><strong>Course name:</strong> Introduction to Web Content Development</p>
+                        <p><strong>Faculty:</strong> Information Sciences</p>
+                        <p><strong>Submission date:</strong> 2 July 2025</p>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-front">
+                        <img src="image/arieysha.jpg" alt="Team Member 3">
+                        <h3>NUR ARIEYSHA</h3>
+                        <p>Group Member 3</p>
+                    </div>
+                    <div class="member-back">
+                        <p><strong>Title:</strong> Corporate Website</p>
+                        <p><strong>Name:</strong> Nur Arieysha binti Mustapa</p>
+                        <p><strong>Student ID:</strong> 2023608998</p>
+                        <p><strong>Group:</strong> KCDIM1444A</p>
+                        <p><strong>Course code:</strong> IML 254</p>
+                        <p><strong>Course name:</strong> Introduction to Web Content Development</p>
+                        <p><strong>Faculty:</strong> Information Sciences</p>
+                        <p><strong>Submission date:</strong> 2 July 2025</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Sugar Bloom. All Rights Reserved.</p>
+    </footer>
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Navigation and Page Switching
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page');
+    
+    // Set home page as active by default
+    document.getElementById('home').classList.add('active');
+    
+    // Handle navigation clicks
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const pageId = this.getAttribute('data-page');
+            
+            // Hide all pages
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Special handling for checkout page
+            if (pageId === 'checkout') {
+                populateCheckout();
+            }
+        });
+    });
+    
+    // Dessert Category Filtering
+    const dessertCategories = document.querySelectorAll('.dessert-category');
+    dessertCategories.forEach(category => {
+        category.addEventListener('click', function(e) {
+            e.preventDefault();
+            const categoryId = this.getAttribute('data-category');
+            
+            // Switch to desserts page
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById('desserts').classList.add('active');
+            
+            // Filter desserts
+            filterDesserts(categoryId);
+        });
+    });
+    
+    // Category Buttons
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active button
+            categoryBtns.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter desserts
+            const category = this.getAttribute('data-category');
+            filterDesserts(category);
+        });
+    });
+    
+    // Cart Management
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    updateCartCount();
+    
+    // Add to Cart Buttons
+    const addToCartBtns = document.querySelectorAll('.add-to-cart');
+    addToCartBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const name = this.getAttribute('data-name');
+            const price = parseFloat(this.getAttribute('data-price'));
+            
+            addToCart(id, name, price);
+        });
+    });
+    
+    // Checkout Button
+    document.getElementById('checkout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (cart.length === 0) {
+            alert('Your cart is empty!');
+            return;
+        }
+        
+        // Switch to checkout page
+        pages.forEach(page => {
+            page.classList.remove('active');
+        });
+        document.getElementById('checkout').classList.add('active');
+        
+        // Populate checkout form
+        populateCheckout();
+    });
+    
+    // Form Submission
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Basic form validation
+        const firstName = document.getElementById('first-name').value;
+        const email = document.getElementById('email').value;
+        const address = document.getElementById('address').value;
+        
+        if (!firstName || !email || !address) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        // Show success message
+        alert('Thank you for your order! Your desserts will be delivered soon.');
+        
+        // Clear cart
+        cart = [];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        updateCartDisplay();
+        
+        // Reset form
+        this.reset();
+        
+        // Return to home page
+        pages.forEach(page => {
+            page.classList.remove('active');
+        });
+        document.getElementById('home').classList.add('active');
+    });
+    
+    // Contact Form Submission
+    document.querySelector('.contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Thank you for your message! We will get back to you soon.');
+        this.reset();
+    });
+    
+    // Auto-flip team member cards
+    const memberCards = document.querySelectorAll('.member-card');
+    let currentCard = 0;
+    
+    setInterval(() => {
+        memberCards[currentCard].classList.remove('flipped');
+        currentCard = (currentCard + 1) % memberCards.length;
+        memberCards[currentCard].classList.add('flipped');
+    }, 3000);
+});
+
+// Filter desserts by category
+function filterDesserts(category) {
+    const dessertCards = document.querySelectorAll('.dessert-card');
+    
+    dessertCards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// Cart Functions
+function addToCart(id, name, price) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Check if item already in cart
+    const existingItem = cart.find(item => item.id === id);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: id,
+            name: name,
+            price: price,
+            quantity: 1
+        });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    updateCartDisplay();
+    
+    // Show success message
+    alert(`${name} has been added to your cart!`);
+}
+
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+    document.getElementById('cart-count').textContent = totalItems;
+}
+
+function updateCartDisplay() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItemsContainer = document.getElementById('cart-items');
+
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
+        document.getElementById('subtotal').textContent = 'RM 0.00';
+        document.getElementById('total').textContent = 'RM 5.00';
+        return;
+    }
+
+    let html = '';
+    let subtotal = 0;
+
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+    
+        html += `
+            <div class="cart-item" data-id="${item.id}">
+                <div class="cart-item-details">
+                    <div class="cart-item-header">
+                        <h3>${item.name}</h3>
+                        <button class="remove-item" data-id="${item.id}">&times;</button>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                        <input type="text" class="quantity" value="${item.quantity}" readonly>
+                        <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                        <span class="item-total">RM ${itemTotal.toFixed(2)}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    cartItemsContainer.innerHTML = html;
+    document.getElementById('subtotal').textContent = `RM ${subtotal.toFixed(2)}`;
+    document.getElementById('total').textContent = `RM ${(subtotal + 5).toFixed(2)}`;
+
+    // Add event listeners to quantity buttons
+    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+        btn.addEventListener('click', function() {
+            updateQuantity(this.getAttribute('data-id'), -1);
+        });
+    });
+
+    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+        btn.addEventListener('click', function() {
+            updateQuantity(this.getAttribute('data-id'), 1);
+        });
+    });
+
+    // Add event listeners to remove buttons
+    document.querySelectorAll('.remove-item').forEach(btn => {
+        btn.addEventListener('click', function() {
+            removeItem(this.getAttribute('data-id'));
+        });
+    });
+}
+
+function updateQuantity(id, change) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const itemIndex = cart.findIndex(item => item.id === id);
+    
+    if (itemIndex !== -1) {
+        cart[itemIndex].quantity += change;
+        
+        // Remove item if quantity reaches 0
+        if (cart[itemIndex].quantity <= 0) {
+            cart.splice(itemIndex, 1);
+        }
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        updateCartDisplay();
+    }
+}
+
+function removeItem(id) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    updateCartDisplay();
+}
+
+function populateCheckout() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const checkoutItemsContainer = document.getElementById('checkout-items');
+    let subtotal = 0;
+    
+    if (cart.length === 0) {
+        checkoutItemsContainer.innerHTML = '<p>No items in cart</p>';
+        document.getElementById('checkout-subtotal').textContent = 'RM 0.00';
+        document.getElementById('checkout-total').textContent = 'RM 5.00';
+        return;
+    }
+    
+    let html = '';
+    
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+        
+        html += `
+            <div class="summary-row">
+                <span>${item.name} x ${item.quantity}</span>
+                <span>RM ${itemTotal.toFixed(2)}</span>
+            </div>
+        `;
+    });
+    
+    checkoutItemsContainer.innerHTML = html;
+    document.getElementById('checkout-subtotal').textContent = `RM ${subtotal.toFixed(2)}`;
+    document.getElementById('checkout-total').textContent = `RM ${(subtotal + 5).toFixed(2)}`;
+}
+    </script>
+</body>
+</html>
